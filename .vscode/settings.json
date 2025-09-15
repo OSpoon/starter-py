@@ -1,0 +1,41 @@
+{
+    "python.defaultInterpreterPath": "./.venv/bin/python",
+    "python.analysis.extraPaths": [
+        "./src"
+    ],
+    "python.analysis.include": [
+        "./src",
+        "./tests"
+    ],
+    "python.analysis.typeCheckingMode": "strict",
+    // MyPy 配置 - 实时类型检查
+    "mypy-type-checker.importStrategy": "fromEnvironment",
+    // Python 文件的保存时自动格式化和修复
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit",
+            "source.fixAll.ruff": "explicit"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    // 测试配置
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.autoTestDiscoverOnSaveEnabled": true,
+    // 编辑器增强
+    "editor.rulers": [
+        88
+    ],
+    "editor.guides.bracketPairs": "active",
+    // 文件排除（保持工作区整洁）
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        "**/.pytest_cache": true,
+        "**/.ruff_cache": true,
+        "**/.mypy_cache": true
+    }
+}

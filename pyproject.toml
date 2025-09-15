@@ -1,0 +1,99 @@
+[project]
+name = "starter-py"
+version = "0.1.0"
+description = "A simple Python project template with modern tooling"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "Your Name", email = "your.email@example.com" }]
+license = { text = "MIT" }
+keywords = ["python", "template", "starter"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = ["streamlit>=1.28.0"]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.6.0",
+    "pytest>=8.0.0",
+    "mypy>=1.11.0",
+    "pre-commit>=3.8.0",
+    "pytest-xdist>=3.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/starter-py"
+Repository = "https://github.com/yourusername/starter-py"
+Issues = "https://github.com/yourusername/starter-py/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# Ruff configuration
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+show-fixes = true
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "W",
+    "F",
+    "I",
+    "B",
+    "C4",
+    "UP",
+    "SIM",
+    "RUF",
+    "S",
+    "N",
+    "A",
+    "ERA",
+    "PIE",
+    "Q",
+    "RET",
+    "T20",
+]
+ignore = ["W191", "E111", "E114", "E117"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*" = ["S101"]
+
+# MyPy configuration
+[tool.mypy]
+python_version = "3.12"
+mypy_path = "src"
+packages = ["starter_py"]
+strict = true
+pretty = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+# Pytest configuration
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = ["--strict-markers", "--strict-config", "-n=auto"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
