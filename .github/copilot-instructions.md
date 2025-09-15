@@ -5,17 +5,30 @@ This is a modern Python project template using uv for dependency management and 
 ## Project Architecture
 
 - **Core Package**: `src/starter_py/` - Main Python package with typed interfaces (`py.typed` marker)
-- **Web Demo**: `app.py` - Streamlit application demonstrating package functionality
+- **Programming Interface**: `main.py` - Command-line interface and programmatic usage examples
+- **Web Debug Interface**: `app.py` - Streamlit application for visual debugging and testing
 - **Tests**: `tests/` - Comprehensive test suite using pytest with parametrized tests
 - **Scripts**: `scripts/init.sh` - Project initialization and template customization
+
+## Development Workflow
+
+### Feature Development Pattern
+
+1. **Core Implementation**: Add functionality to `src/starter_py/` with full type annotations
+2. **Export Interface**: Update `__init__.py` `__all__` list for public API
+3. **Test Coverage**: Write comprehensive tests in `tests/` module (required, no exceptions)
+4. **Programming Interface**: Update `main.py` for command-line and programmatic usage
+5. **Visual Debug**: Update `app.py` for interactive web-based testing and debugging
+6. **No Documentation**: Focus on code quality and tests, skip separate documentation files
 
 ## Key Development Patterns
 
 ### Package Structure Convention
 
 - Main package in `src/` layout with `py.typed` for type checking
-- Explicit `__all__` exports in `__init__.py`
-- Docstrings with Args/Returns/Examples format (supports doctests)
+- Explicit `__all__` exports in `__init__.py` for public API
+- **No separate documentation files** - focus on code quality and tests
+- Docstrings for API reference only, keep minimal and functional
 
 ### Code Style & Type Constraints
 
