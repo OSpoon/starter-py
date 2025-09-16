@@ -136,12 +136,15 @@ find . -name "*.bak" -delete 2>/dev/null || true
 # 8. 重新安装项目
 echo "重新安装项目..."
 if command -v uv >/dev/null 2>&1; then
+    # 删除现有虚拟环境以使用新的项目名称
     if [ -d ".venv" ]; then
-        echo "✅ 使用现有虚拟环境"
+        echo "🗑️  删除旧的虚拟环境..."
+        rm -rf ".venv"
     fi
-    echo "正在同步依赖..."
+    
+    echo "🏗️  创建新的虚拟环境..."
     if uv sync --extra dev; then
-        echo "✅ 项目依赖已同步"
+        echo "✅ 项目依赖已同步，虚拟环境已使用新项目名称创建"
     else
         echo "❌ 依赖同步失败，请检查配置"
         exit 1
