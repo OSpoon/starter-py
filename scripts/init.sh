@@ -141,7 +141,7 @@ if command -v uv >/dev/null 2>&1; then
         echo "🗑️  删除旧的虚拟环境..."
         rm -rf ".venv"
     fi
-    
+
     echo "🏗️  创建新的虚拟环境..."
     if uv sync --extra dev; then
         echo "✅ 项目依赖已同步，虚拟环境已使用新项目名称创建"
