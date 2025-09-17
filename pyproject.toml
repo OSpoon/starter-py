@@ -61,7 +61,7 @@ select = [
     "RET",
     "T20",
 ]
-ignore = ["W191", "E111", "E114", "E117"]
+ignore = ["W191", "E111", "E114", "E117", "RUF002", "RUF003"]
 
 [tool.ruff.format]
 quote-style = "double"

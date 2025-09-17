@@ -1,13 +1,4 @@
 {
-    "python.defaultInterpreterPath": "./.venv/bin/python",
-    "python.analysis.extraPaths": [
-        "./src"
-    ],
-    "python.analysis.include": [
-        "./src",
-        "./tests"
-    ],
-    "python.analysis.typeCheckingMode": "strict",
     // MyPy 配置 - 实时类型检查
     "mypy-type-checker.importStrategy": "fromEnvironment",
     // Python 文件的保存时自动格式化和修复
