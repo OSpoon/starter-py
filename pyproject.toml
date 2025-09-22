@@ -80,6 +80,7 @@ packages = ["starter_py"]
 strict = true
 pretty = true
 show_error_codes = true
+ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "tests.*"
