@@ -1,0 +1,68 @@
+# Copier ignore patterns
+
+# Files and directories that should not be copied to the generated project
+
+# Template files (these get processed, not copied directly)
+
+\*.jinja
+
+# Copier configuration
+
+copier.yml
+.copierignore
+
+# Template project's own files
+
+README.md
+LICENSE
+.gitignore
+
+# Development artifacts that shouldn't be in generated projects
+
+**pycache**/
+_.pyc
+_.pyo
+\*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment and lock files (these will be regenerated)
+
+.venv/
+uv.lock
+.env
+.env.local
+
+# Temporary testing directories
+
+temp/
+test-_/
+final-test/
+_-validation/
+example-_/
+generated-_/
+
+# IDE files that are personal
+
+.vscode/settings.json.user
+.idea/
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# Git directory (template project's own git)
+
+.git/
+
+# Build artifacts
+
+build/
+dist/
+
+# Coverage reports
+
+.coverage
+htmlcov/

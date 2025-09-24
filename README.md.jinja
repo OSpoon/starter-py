@@ -1,0 +1,119 @@
+# {{ project_name }}
+
+{{ project_description }}
+
+## 环境要求
+
+- Python >= {{ python_version }}
+- [uv](https://docs.astral.sh/uv/) (推荐的 Python 包管理器)
+
+## 安装
+
+```bash
+# 克隆项目
+git clone https://github.com/{{ github_username }}/{{ project_name }}.git
+cd {{ project_name }}
+
+# 安装依赖
+uv sync --extra dev
+```
+
+## 使用
+
+### 程序化使用
+
+```python
+from {{ project_slug }} import add
+
+result = add(2.0, 3.0)
+print(f"2.0 + 3.0 = {result}")
+```
+
+{% if include_cli -%}
+### 命令行使用
+
+```bash
+uv run python main.py
+```
+{% endif %}
+{% if include_streamlit -%}
+### Web 演示
+
+启动 Streamlit Web 应用：
+
+```bash
+make web
+```
+
+浏览器将自动打开 `http://localhost:8501` 演示页面。
+{% endif %}
+## 开发
+
+### 常用命令
+
+```bash
+make lint    # 代码格式化和检查
+make test    # 运行测试
+make build   # 构建包
+make clean   # 清理临时文件
+{% if include_streamlit -%}
+make web     # 启动 Web 演示
+{% endif -%}
+make help    # 查看所有命令
+```
+
+### 代码质量
+
+项目使用以下工具确保代码质量：
+
+- **Ruff**: 代码格式化和 lint
+- **MyPy**: 类型检查
+- **pytest**: 单元测试
+- **pre-commit**: Git 提交前检查
+
+### 测试
+
+```bash
+# 运行所有测试
+make test
+
+# 运行特定测试
+uv run pytest tests/math_test.py
+
+# 查看测试覆盖率
+uv run pytest --cov={{ project_slug }}
+```
+
+## 项目结构
+
+```
+{{ project_name }}/
+├── src/
+│   └── {{ project_slug }}/       # 主要 Python 包
+│       ├── __init__.py
+│       ├── math.py              # 示例模块
+│       └── py.typed             # 类型标记
+├── tests/                       # 测试文件
+│   └── math_test.py
+{% if include_streamlit -%}
+├── app.py                       # Streamlit Web 应用
+{% endif -%}
+{% if include_cli -%}
+├── main.py                      # 命令行接口示例
+{% endif -%}
+├── pyproject.toml               # 项目配置
+├── Makefile                     # 开发命令
+└── README.md                    # 项目文档
+```
+
+## 许可证
+
+本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
+
+## 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
+## 作者
+
+{{ author_name }} - {{ author_email }}

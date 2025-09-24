@@ -1,8 +1,9 @@
+{% if include_cli -%}
 """Simple example demonstrating the add function."""
 
 import logging
 
-from starter_py import add
+from {{ project_slug }} import add
 
 # Configure logging
 logging.basicConfig(
@@ -13,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 def main() -> None:
     """Main function to demonstrate the add function."""
-    logger.info("Hello from starter-py!")
+    logger.info("Hello from {{ project_name }}!")
 
     # Demonstrate the add function
     result = add(2.0, 3.0)
@@ -26,3 +27,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+{%- endif %}

@@ -3,7 +3,7 @@
 import pytest
 from pytest import approx
 
-from starter_py.math import add
+from {{ project_slug }}.math import add
 
 
 class TestAdd:
@@ -45,11 +45,11 @@ class TestAdd:
             (0, 0, 0),
             (1, 1, 2),
             (-1, 1, 0),
-            (100, 200, 300),
-            (1.5, 2.5, 4.0),
+            (10.5, -5.5, 5.0),
+            (1e6, 2e6, 3e6),
         ],
     )
     def test_add_parametrized(self, a: float, b: float, expected: float) -> None:
-        """Test addition with various parameter combinations."""
+        """Test add function with various parameter combinations."""
         result = add(a, b)
-        assert result == expected
+        assert result == approx(expected)

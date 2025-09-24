@@ -1,24 +1,31 @@
-# Copilot Instructions for starter-py
+# Copilot Instructions for {{ project_name }}
 
-This is a modern Python project template using uv for dependency management and featuring a Streamlit web demo.
+{{ project_description }}
 
 ## Project Architecture
 
-- **Core Package**: `src/starter_py/` - Main Python package with typed interfaces (`py.typed` marker)
+- **Core Package**: `src/{{ project_slug }}/` - Main Python package with typed interfaces (`py.typed` marker)
+{%- if include_cli %}
 - **Programming Interface**: `main.py` - Command-line interface and programmatic usage examples
+{%- endif %}
+{%- if include_streamlit %}
 - **Web Debug Interface**: `app.py` - Streamlit application for visual debugging and testing
+{%- endif %}
 - **Tests**: `tests/` - Comprehensive test suite using pytest with parametrized tests
-- **Scripts**: `scripts/init.sh` - Project initialization and template customization
 
 ## Development Workflow
 
 ### Feature Development Pattern
 
-1. **Core Implementation**: Add functionality to `src/starter_py/` with full type annotations
+1. **Core Implementation**: Add functionality to `src/{{ project_slug }}/` with full type annotations
 2. **Export Interface**: Update `__init__.py` `__all__` list for public API
 3. **Test Coverage**: Write comprehensive tests in `tests/` module (required, no exceptions)
+{%- if include_cli %}
 4. **Programming Interface**: Update `main.py` for command-line and programmatic usage
+{%- endif %}
+{%- if include_streamlit %}
 5. **Visual Debug**: Update `app.py` for interactive web-based testing and debugging
+{%- endif %}
 6. **No Documentation**: Focus on code quality and tests, skip separate documentation files
 
 ## Key Development Patterns
@@ -61,10 +68,12 @@ message = "This is the preferred quote style"
 from collections.abc import Sequence
 from pathlib import Path
 
+{%- if include_streamlit %}
 import streamlit as st
+{%- endif %}
 from pytest import approx
 
-from starter_py.math import add  # Local imports last
+from {{ project_slug }}.math import add  # Local imports last
 
 # Function naming: snake_case, descriptive
 def calculate_total_sum(values: list[float]) -> float:
@@ -107,12 +116,13 @@ class TestAdd:
 
 ```bash
 # Primary development workflow
-make init NAME=project-name    # Initialize new project from template
-make web                      # Start Streamlit demo at localhost:8501
 make lint                     # Run ruff format + ruff check --fix + mypy
 make test                     # Run pytest with xdist parallel execution
 make build                    # Build package with hatchling
 make clean                    # Remove all cache directories
+{%- if include_streamlit %}
+make web                      # Start Streamlit demo at localhost:8501
+{%- endif %}
 
 # Never use: pip, python -m, direct pytest/ruff commands
 # Always use: uv run <command> or make targets
@@ -122,11 +132,13 @@ make clean                    # Remove all cache directories
 
 **IMPORTANT**: All `uv run` commands and `make` targets automatically use the project's virtual environment (`.venv/`), **NOT your base/conda environment**:
 
-````bash
-# These commands are SAFE - they use project .venv automatically:
+```bash
+# These commands are SAFE - they use .venv automatically:
 make lint                     # Uses .venv/bin/python
 make test                     # Uses .venv/bin/python
+{%- if include_streamlit %}
 make web                      # Uses .venv/bin/python
+{%- endif %}
 uv run python script.py       # Uses .venv/bin/python
 uv run pytest                 # Uses .venv/bin/pytest
 
@@ -137,14 +149,7 @@ which python                  # Shows: /path/to/base/environment/python
 # Dependencies are isolated to project .venv:
 uv add package-name           # Installs to .venv only
 uv sync --extra dev           # Syncs to .venv only
-```## Project Initialization Workflow
-
-The `make init` command transforms this template:
-
-1. Updates `pyproject.toml` project name and package references
-2. Renames `src/starter_py/` to `src/{new_package_name}/`
-3. Updates all import statements across source and test files
-4. Configures MyPy and Hatch build paths for new package name
+```
 
 ## Tool Configuration Details
 
@@ -152,7 +157,7 @@ The `make init` command transforms this template:
   - **Automatic virtual environment**: `uv run` always uses `.venv/`, never base environment
   - Project dependencies isolated in `.venv/` directory
   - No need to manually activate/deactivate virtual environments
-- **ruff**: Formatter + linter with strict rule set targeting Python 3.12+
+- **ruff**: Formatter + linter with strict rule set targeting Python {{ python_version }}+
   - Line length: 88 characters
   - Double quotes, space indentation
   - Enabled rules: E,W,F,I,B,C4,UP,SIM,RUF,S,N,A,ERA,PIE,Q,RET,T20
@@ -161,7 +166,9 @@ The `make init` command transforms this template:
   - Requires complete type annotations on all functions
   - `py.typed` marker enables package type checking
 - **pytest**: Parallel execution via pytest-xdist, custom markers for test categorization
-- **pre-commit**: Enforces formatting and type checking on commits## Lint Fix Workflow
+- **pre-commit**: Enforces formatting and type checking on commits
+
+## Lint Fix Workflow
 
 When adding new code that fails lint checks:
 
@@ -174,19 +181,22 @@ make lint  # Runs: ruff format + ruff check --fix + mypy
 # 3. Line length violations: break long lines at 88 characters
 # 4. Use double quotes consistently
 # 5. Remove unused variables/imports (ruff auto-fixes)
-````
+```
 
 ## Integration Points
 
-- Streamlit app imports directly from `src/starter_py/math.py`
+{%- if include_streamlit %}
+- Streamlit app imports directly from `src/{{ project_slug }}/math.py`
+{%- endif %}
 - CI uses uv for dependency management and runs full lint/test suite
-- Template system allows easy project customization via init script
 - Type checking configured for source code strict mode, relaxed for tests
 
 ## When Adding Features
 
-1. Add core functionality to `src/starter_py/` with full type hints
+1. Add core functionality to `src/{{ project_slug }}/` with full type hints
 2. Export new functions in `__init__.py` `__all__` list
 3. Add comprehensive tests in `tests/` with parametrized cases
+{%- if include_streamlit %}
 4. Update Streamlit demo in `app.py` to showcase new features
+{%- endif %}
 5. Run `make lint` before committing (enforced by pre-commit hooks)

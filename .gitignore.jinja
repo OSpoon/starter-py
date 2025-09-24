@@ -1,120 +1,62 @@
-# Copier Template Project .gitignore# Byte-compiled / optimized / DLL files
-
+# Byte-compiled / optimized / DLL files
 __pycache__/
+*.py[cod]
+*$py.class
 
-# Template development and testing artifacts*.py[cod]
+# C extensions
+*.so
 
-temp/*$py.class
-
-test-*/
-
-example-*/# C extensions
-
-generated-*/*.so
-
-*-validation/
-
-*-test/# Distribution / packaging
-
+# Distribution / packaging
 .Python
-
-# Python cache and build artifactsbuild/
-
-__pycache__/develop-eggs/
-
-*.py[cod]dist/
-
-*$py.classdownloads/
-
-*.egg-info/eggs/
-
-build/.eggs/
-
-dist/lib/
-
-.eggs/lib64/
-
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
 parts/
-
-# Virtual environmentssdist/
-
-.venv/var/
-
-venv/wheels/
-
-env/pip-wheel-metadata/
-
-ENV/share/python-wheels/
-
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# Development tools cache.installed.cfg
-
-.mypy_cache/*.egg
-
-.pytest_cache/MANIFEST
-
-.ruff_cache/
-
-.coverage# PyInstaller
-
-htmlcov/#  Usually these files are written by a python script from a template
-
+# PyInstaller
+#  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
 
-# IDE files*.manifest
-
-.vscode/settings.json*.spec
-
-.idea/
-
-*.swp# Installer logs
-
-*.swopip-log.txt
-
+# Installer logs
+pip-log.txt
 pip-delete-this-directory.txt
 
-# OS files
+# Unit test reports
+.tox/
+.nox/
+.cache
+nosetests.xml
+.hypothesis/
+.pytest_cache/
 
-.DS_Store# Unit test reports
-
-.DS_Store?.tox/
-
-._*.nox/
-
-.Spotlight-V100.cache
-
-.Trashesnosetests.xml
-
-ehthumbs.db.hypothesis/
-
-Thumbs.db.pytest_cache/
-
-
-
-# Environment files# Translations
-
-.env*.mo
-
-.env.local*.pot
-
-.env.*.local
+# Translations
+*.mo
+*.pot
 
 # Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
 
-# Temporary files*.log
-
-*.tmplocal_settings.py
-
-*.bakdb.sqlite3
-
-*~db.sqlite3-journal
-
-
-
-# Lock files that get regenerated# Flask stuff:
-
-uv.lockinstance/
+# Flask stuff:
+instance/
 .webassets-cache
 
 # Scrapy stuff:

@@ -1,10 +1,10 @@
 [project]
-name = "starter-py"
+name = "{{ project_name }}"
 version = "0.1.0"
-description = "A simple Python project template with modern tooling"
+description = "{{ project_description }}"
 readme = "README.md"
-requires-python = ">=3.12"
-authors = [{ name = "Your Name", email = "your.email@example.com" }]
+requires-python = ">=3.13"
+authors = [{ name = "{{ author_name }}", email = "{{ author_email }}" }]
 license = { text = "MIT" }
 keywords = ["python", "template", "starter"]
 classifiers = [
@@ -12,10 +12,13 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
 ]
-dependencies = ["streamlit>=1.28.0"]
+dependencies = [
+{%- if include_streamlit %}
+    "streamlit>=1.28.0"
+{%- endif %}
+]
 
 [project.optional-dependencies]
 dev = [
@@ -24,20 +27,25 @@ dev = [
     "mypy>=1.11.0",
     "pre-commit>=3.8.0",
     "pytest-xdist>=3.0.0",
+    "copier>=9.0.0"
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/starter-py"
-Repository = "https://github.com/yourusername/starter-py"
-Issues = "https://github.com/yourusername/starter-py/issues"
+Homepage = "https://github.com/{{ github_username }}/{{ project_name }}"
+Repository = "https://github.com/{{ github_username }}/{{ project_name }}"
+Issues = "https://github.com/{{ github_username }}/{{ project_name }}/issues"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+# Hatch build configuration
+[tool.hatch.build.targets.wheel]
+packages = ["src/{{ project_slug }}"]
+
 # Ruff configuration
 [tool.ruff]
-target-version = "py312"
+target-version = "py313"
 line-length = 88
 show-fixes = true
 
@@ -74,9 +82,9 @@ line-ending = "auto"
 
 # MyPy configuration
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.13"
 mypy_path = "src"
-packages = ["starter_py"]
+packages = ["{{ project_slug }}"]
 strict = true
 pretty = true
 show_error_codes = true

@@ -1,0 +1,101 @@
+_templates_suffix: .jinja
+_envops:
+  block_start_string: "{%"
+  block_end_string: "%}"
+  variable_start_string: "{{"
+  variable_end_string: "}}"
+  comment_start_string: "{#"
+  comment_end_string: "#}"
+
+# 后置任务 - 项目初始化后自动执行的命令
+_tasks:
+  - command: "uv sync --extra dev"
+    when: "{{ install_deps }}"
+  - command: "git init"
+    when: "{{ init_git }}"
+  - command: "git add ."
+    when: "{{ init_git }}"
+  - command: "uv run pre-commit install"
+    when: "{{ setup_precommit and init_git }}"
+  - command: "git commit -m 'Initial commit: Initialize {{ project_name }} project'"
+    when: "{{ init_git }}"
+
+# 项目基本信息
+project_name:
+  type: str
+  help: 项目名称（用于 GitHub 仓库名，支持连字符）
+  placeholder: "my-awesome-project"
+  validator: >-
+    {% if not project_name %}
+    项目名称不能为空
+    {% elif not project_name | regex_search('^[a-zA-Z0-9_-]+$') %}
+    项目名称只能包含字母、数字、下划线和连字符
+    {% endif %}
+
+project_slug:
+  type: str
+  help: Python 包名（自动从项目名称生成，或手动指定）
+  default: "{{ project_name | lower | replace('-', '_') }}"
+  validator: >-
+    {% if not project_slug %}
+    包名不能为空
+    {% elif not project_slug | regex_search('^[a-z][a-z0-9_]*$') %}
+    包名只能包含小写字母、数字和下划线，且必须以字母开头
+    {% endif %}
+
+project_description:
+  type: str
+  help: 项目描述
+  default: "A modern Python project built with uv and Streamlit"
+  placeholder: "A modern Python project built with uv and Streamlit"
+
+# 作者信息
+author_name:
+  type: str
+  help: 作者姓名
+  default: "Your Name"
+  placeholder: "张三"
+
+author_email:
+  type: str
+  help: 作者邮箱
+  default: "your.email@example.com"
+  placeholder: "zhangsan@example.com"
+  validator: >-
+    {% if author_email and not author_email | regex_search('^[^@]+@[^@]+\.[^@]+$') %}
+    请输入有效的邮箱地址
+    {% endif %}
+
+# GitHub 信息
+github_username:
+  type: str
+  help: GitHub 用户名/组织名
+  default: "yourusername"
+  placeholder: "octocat"
+
+# 可选的依赖和功能
+include_streamlit:
+  type: bool
+  help: 是否包含 Streamlit web 应用演示
+  default: true
+
+include_cli:
+  type: bool
+  help: 是否包含命令行接口示例
+  default: true
+
+# 开发工具配置
+setup_precommit:
+  type: bool
+  help: 是否安装 pre-commit hooks
+  default: true
+
+init_git:
+  type: bool
+  help: 是否初始化 Git 仓库并创建初始提交
+  default: true
+
+install_deps:
+  type: bool
+  help: 是否自动安装项目依赖
+  default: true

@@ -1,0 +1,143 @@
+{% if include_streamlit -%}
+"""Streamlit web application demonstrating the add function."""
+
+import streamlit as st
+
+from src.{{ project_slug }}.math import add
+
+
+def main() -> None:
+    """Main function for the Streamlit app."""
+    # Page configuration
+    st.set_page_config(
+        page_title="Math Operations Demo",
+        page_icon="🧮",
+        layout="centered",
+        initial_sidebar_state="collapsed",
+    )
+
+    # Header
+    st.title("🧮 Math Operations Demo")
+    st.markdown(
+        """
+        Welcome to the **{{ project_name }}** demo! This application demonstrates
+        the `add` function from our math module in an interactive way.
+        """
+    )
+    st.markdown("---")
+
+    # Main calculator section
+    st.header("🔢 Addition Calculator")
+    st.markdown("Enter two numbers below to see the addition in action:")
+
+    # Create two columns for input
+    col1, col2 = st.columns(2)
+
+    with col1:
+        a = st.number_input(
+            "First number (a)",
+            value=2.0,
+            step=0.1,
+            format="%.2f",
+            help="Enter the first number for addition",
+        )
+
+    with col2:
+        b = st.number_input(
+            "Second number (b)",
+            value=3.0,
+            step=0.1,
+            format="%.2f",
+            help="Enter the second number for addition",
+        )
+
+    # Calculate and display result
+    result = add(a, b)
+
+    # Display result with styling
+    st.markdown("### Result:")
+    st.success(f"**{a} + {b} = {result}**")
+
+    # Show code
+    with st.expander("📝 View Code"):
+        st.code(
+            f"""from src.{{ project_slug }}.math import add
+
+result = add({a}, {b})
+print("Result: " + str(result))""",
+            language="python",
+        )
+
+    st.markdown("---")
+
+    # Examples section
+    st.header("📊 Examples")
+    st.markdown("Here are some example calculations using the `add` function:")
+
+    examples = [
+        (2, 3, "Simple addition"),
+        (-5, 8, "Negative + positive"),
+        (0.1, 0.2, "Decimal addition"),
+        (1000000, 2000000, "Large numbers"),
+        (-10, -20, "Both negative"),
+    ]
+
+    for i, (x, y, description) in enumerate(examples, 1):
+        example_result = add(x, y)
+        with st.container():
+            col1, col2, col3 = st.columns([2, 1, 2])
+            with col1:
+                st.write(f"**Example {i}:** {description}")
+            with col2:
+                st.code(f"{x} + {y}")
+            with col3:
+                st.write(f"= **{example_result}**")
+
+    st.markdown("---")
+
+    # Performance section
+    st.header("⚡ Performance Test")
+    st.markdown("Test the performance of the add function with multiple operations:")
+
+    if st.button("🚀 Run Performance Test"):
+        import time
+
+        n_operations = 1000000
+        numbers = [(i, i + 1) for i in range(n_operations)]
+
+        start_time = time.time()
+        # 执行大量加法运算
+        for a, b in numbers:
+            add(a, b)
+        end_time = time.time()
+
+        execution_time = end_time - start_time
+        operations_per_second = n_operations / execution_time
+
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("Operations", f"{n_operations:,}")
+        with col2:
+            st.metric("Time", f"{execution_time:.4f}s")
+        with col3:
+            st.metric("Ops/sec", f"{operations_per_second:,.0f}")
+
+        st.success(
+            f"✅ Performed {n_operations:,} additions in {execution_time:.4f} seconds!"
+        )
+
+    # Footer
+    st.markdown("---")
+    st.markdown(
+        """
+        <div style='text-align: center; color: #666; font-size: 0.8em;'>
+            Built with ❤️ using Streamlit and Python
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+if __name__ == "__main__":
+    main()
+{%- endif %}

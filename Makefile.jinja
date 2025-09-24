@@ -1,0 +1,52 @@
+.PHONY: lint format test build clean{% if include_streamlit %} web{% endif %} help
+
+help: ## Show this help message
+	@echo '🚀 {{ project_name }} Development Commands'
+	@echo ''
+	@printf '  \033[36m%-15s\033[0m %s\n' 'lint' 'Format and fix code issues'
+	@printf '  \033[36m%-15s\033[0m %s\n' 'format' 'Quick format with ruff only'
+	@printf '  \033[36m%-15s\033[0m %s\n' 'test' 'Run tests'
+	@printf '  \033[36m%-15s\033[0m %s\n' 'build' 'Build package'
+	@printf '  \033[36m%-15s\033[0m %s\n' 'clean' 'Clean temporary files'
+{%- if include_streamlit %}
+	@printf '  \033[36m%-15s\033[0m %s\n' 'web' 'Run the Streamlit web application'
+{%- endif %}
+	@printf '  \033[36m%-15s\033[0m %s\n' 'help' 'Show this help message'
+
+{% if include_streamlit -%}
+web: ## Run the Streamlit web application
+	@echo "🌐 Starting Streamlit web application..."
+	@echo "📱 The app will open in your browser at http://localhost:8501"
+	@uv run streamlit run app.py
+
+{%- endif %}
+lint: ## Format and fix code issues
+	@echo "🎨 Formatting and fixing code issues..."
+	@uv run ruff format .
+	@uv run ruff check --fix .
+	@uv run mypy src tests
+	@echo "✅ Code quality checks completed!"
+
+format: ## Quick format with ruff only
+	@echo "⚡ Quick formatting with ruff..."
+	@uv run ruff format .
+	@uv run ruff check --fix .
+	@echo "✨ Quick format completed!"
+
+test: ## Run tests
+	@uv run pytest
+
+build: ## Build package
+	@echo "📦 Building package..."
+	@uv build
+
+clean: ## Clean temporary files
+	@echo "🧹 Cleaning temporary files..."
+	@find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+	@find . -type d -name "*.egg-info" -exec rm -rf {} + 2>/dev/null || true
+	@find . -type d -name ".pytest_cache" -exec rm -rf {} + 2>/dev/null || true
+	@find . -type d -name ".mypy_cache" -exec rm -rf {} + 2>/dev/null || true
+	@find . -name "*.pyc" -delete 2>/dev/null || true
+	@find . -name "*.pyo" -delete 2>/dev/null || true
+	@find . -name "*~" -delete 2>/dev/null || true
+	@rm -rf build/ dist/ .coverage htmlcov/ .tox/ .cache/ .pytest_cache/ .mypy_cache/ 2>/dev/null || true
