@@ -20,28 +20,16 @@ _tasks:
   - command: "git commit -m 'Initial commit: Initialize {{ project_name }} project'"
     when: "{{ init_git }}"
 
-# 项目基本信息
+# 项目基本信息 - 自动从目录名获取
 project_name:
   type: str
-  help: 项目名称（用于 GitHub 仓库名，支持连字符）
-  placeholder: "my-awesome-project"
-  validator: >-
-    {% if not project_name %}
-    项目名称不能为空
-    {% elif not project_name | regex_search('^[a-zA-Z0-9_-]+$') %}
-    项目名称只能包含字母、数字、下划线和连字符
-    {% endif %}
+  default: "{{ _copier_conf.dst_path | basename }}"
+  when: false  # 隐藏此问题，直接使用默认值
 
 project_slug:
   type: str
-  help: Python 包名（自动从项目名称生成，或手动指定）
   default: "{{ project_name | lower | replace('-', '_') }}"
-  validator: >-
-    {% if not project_slug %}
-    包名不能为空
-    {% elif not project_slug | regex_search('^[a-z][a-z0-9_]*$') %}
-    包名只能包含小写字母、数字和下划线，且必须以字母开头
-    {% endif %}
+  when: false  # 隐藏此问题，直接使用默认值
 
 project_description:
   type: str
