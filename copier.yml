@@ -24,12 +24,12 @@ _tasks:
 project_name:
   type: str
   default: "{{ _copier_conf.dst_path | basename }}"
-  when: false  # 隐藏此问题，直接使用默认值
+  when: false # 隐藏此问题，直接使用默认值
 
 project_slug:
   type: str
   default: "{{ project_name | lower | replace('-', '_') }}"
-  when: false  # 隐藏此问题，直接使用默认值
+  when: false # 隐藏此问题，直接使用默认值
 
 project_description:
   type: str
